@@ -76,6 +76,11 @@ export class AppMenu {
                         ]
                     },
                     {
+                        label: 'Employee',
+                        icon: 'pi pi-fw pi-users',
+                        routerLink: ['/pages/employee']
+                    },
+                    {
                         label: 'Crud',
                         icon: 'pi pi-fw pi-pencil',
                         routerLink: ['/pages/crud']

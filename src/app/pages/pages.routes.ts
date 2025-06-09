@@ -2,8 +2,10 @@ import { Routes } from '@angular/router';
 import { Documentation } from './documentation/documentation';
 import { Crud } from './crud/crud';
 import { Empty } from './empty/empty';
+import { EmployeeComponent } from './employee';
 
 export default [
+    { path: 'employee', component: EmployeeComponent },
     { path: 'documentation', component: Documentation },
     { path: 'crud', component: Crud },
     { path: 'empty', component: Empty },

@@ -19,6 +19,7 @@ import { TagModule } from 'primeng/tag';
 import { Customer, CustomerService } from '../service/customer.service';
 import { Product, ProductService } from '../service/product.service';
 import { Employee, EmployeeService, Role } from '../service/employee.service';
+import { Router } from '@angular/router';
 
 interface expandedRows {
     [key: string]: boolean;
@@ -59,15 +60,6 @@ interface expandedRows {
 })
 export class EmployeeComponent implements OnInit {
     employees: Employee[] = [];
-    customers1: Customer[] = [];
-
-    customers2: Customer[] = [];
-
-    customers3: Customer[] = [];
-
-    selectedCustomers1: Customer[] = [];
-
-    selectedCustomer: Customer = {};
 
     roles: Role[] = [];
 
@@ -90,23 +82,12 @@ export class EmployeeComponent implements OnInit {
     @ViewChild('filter') filter!: ElementRef;
 
     constructor(
-        private customerService: CustomerService,
-        private productService: ProductService,
+        private router: Router,
         private employeeService: EmployeeService
     ) {}
 
     ngOnInit() {
         this.fetchEmployees();
-        this.customerService.getCustomersLarge().then((customers) => {
-            this.customers1 = customers;
-            this.loading = false;
-
-            // @ts-ignore
-            this.customers1.forEach((customer) => (customer.date = new Date(customer.date)));
-        });
-        this.customerService.getCustomersMedium().then((customers) => (this.customers2 = customers));
-        this.customerService.getCustomersLarge().then((customers) => (this.customers3 = customers));
-        this.productService.getProductsWithOrdersSmall().then((data) => (this.products = data));
 
         this.roles = this.employeeService.getAllRolesMapping();
 
@@ -129,31 +110,27 @@ export class EmployeeComponent implements OnInit {
         console.log(this.employees);
     }
 
+    onAdd() {
+        this.router.navigate(['/pages/manage-employee', 'new']);
+    }
+
+    onEdit(emp: Employee) {
+        console.log('edit', emp);
+        this.router.navigate(['/pages/manage-employee', emp.id]);
+    }
+
+    onDelete(emp: Employee) {
+        this.employeeService.deleteEmployee(emp.id).then(() => {
+            this.employees = this.employees.filter((e) => e.id !== emp.id);
+        });
+    }
+
     onSort() {
         this.updateRowGroupMetaData();
     }
 
     updateRowGroupMetaData() {
         this.rowGroupMetadata = {};
-
-        if (this.customers3) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                const rowData = this.customers3[i];
-                const representativeName = rowData?.representative?.name || '';
-
-                if (i === 0) {
-                    this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
-                } else {
-                    const previousRowData = this.customers3[i - 1];
-                    const previousRowGroup = previousRowData?.representative?.name;
-                    if (representativeName === previousRowGroup) {
-                        this.rowGroupMetadata[representativeName].size++;
-                    } else {
-                        this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-                    }
-                }
-            }
-        }
     }
 
     expandAll() {
@@ -175,47 +152,12 @@ export class EmployeeComponent implements OnInit {
 
     clear(table: Table) {
         table.clear();
-        this.filter.nativeElement.value = '';
     }
 
-    getSeverity(status: string) {
-        switch (status) {
-            case 'qualified':
-            case 'instock':
-            case 'INSTOCK':
-            case 'DELIVERED':
-            case 'delivered':
-                return 'success';
-
-            case 'negotiation':
-            case 'lowstock':
-            case 'LOWSTOCK':
-            case 'PENDING':
-            case 'pending':
-                return 'warn';
-
-            case 'unqualified':
-            case 'outofstock':
-            case 'OUTOFSTOCK':
-            case 'CANCELLED':
-            case 'cancelled':
-                return 'danger';
-
-            default:
-                return 'info';
-        }
-    }
+    getSeverity(status: string) {}
 
     calculateCustomerTotal(name: string) {
         let total = 0;
-
-        if (this.customers2) {
-            for (let customer of this.customers2) {
-                if (customer.representative?.name === name) {
-                    total++;
-                }
-            }
-        }
 
         return total;
     }

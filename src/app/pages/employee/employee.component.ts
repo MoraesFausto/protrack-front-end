@@ -90,15 +90,6 @@ export class EmployeeComponent implements OnInit {
         this.fetchEmployees();
 
         this.roles = this.employeeService.getAllRolesMapping();
-
-        this.statuses = [
-            { label: 'Unqualified', value: 'unqualified' },
-            { label: 'Qualified', value: 'qualified' },
-            { label: 'New', value: 'new' },
-            { label: 'Negotiation', value: 'negotiation' },
-            { label: 'Renewal', value: 'renewal' },
-            { label: 'Proposal', value: 'proposal' }
-        ];
     }
 
     async fetchEmployees() {
@@ -133,32 +124,11 @@ export class EmployeeComponent implements OnInit {
         this.rowGroupMetadata = {};
     }
 
-    expandAll() {
-        if (!this.isExpanded) {
-            this.products.forEach((product) => (product && product.name ? (this.expandedRows[product.name] = true) : ''));
-        } else {
-            this.expandedRows = {};
-        }
-        this.isExpanded = !this.isExpanded;
-    }
-
-    formatCurrency(value: number) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
-
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 
     clear(table: Table) {
         table.clear();
-    }
-
-    getSeverity(status: string) {}
-
-    calculateCustomerTotal(name: string) {
-        let total = 0;
-
-        return total;
     }
 }

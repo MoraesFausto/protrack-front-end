@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Gerenciamento de Times</h5>
+    <button pButton
+            icon="pi pi-plus"
+            label="Novo Time"
+            class="p-button-success"
+            routerLink="/teams/create"
+            title="Novo Time"></button>
+  </div>
+  <div class="card-body">
+    <p-table [value]="teams" [paginator]="true" [rows]="10">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Membros</th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-team>
+        <tr>
+          <td>{{ team.name }}</td>
+          <td>{{ team.description }}</td>
+          <td>{{ team.employees?.length || 0 }}</td>
+          <td>
+            <button pButton
+                    icon="pi pi-users"
+                    class="p-button-info p-button-sm p-mr-2"
+
+                    title="Ver membros"></button>
+            <button pButton
+                    icon="pi pi-pencil"
+                    class="p-button-warning p-button-sm p-mr-2"
+
+                    title="Editar time"></button>
+            <button pButton
+                    icon="pi pi-trash"
+                    class="p-button-danger p-button-sm"
+                    (click)="confirmDelete(team.id)"
+                    title="Excluir time"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<!--[routerLink]="['/teams/members', team.id]"-->

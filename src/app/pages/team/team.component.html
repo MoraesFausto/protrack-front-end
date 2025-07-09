@@ -3,9 +3,9 @@
     <p-table #dt1 [value]="teams" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true" [showGridlines]="true" [paginator]="true" [globalFilterFields]="['name']" responsiveLayout="scroll">
         <ng-template #caption>
             <div class="flex justify-between items-center flex-column sm:flex-row gap-4">
-                <button pButton label="Add" class="p-button-outlined mb-2" icon="pi pi-plus" (click)="onAdd()"></button>
+                <button pButton label="Add" class="p-button-outlined mb-2" icon="pi pi-plus" (click)="onAdd()" title="Add Team"></button>
 
-                <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="dt1.clear()"></button>
+                <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="dt1.clear()" title="Clear Filters"></button>
 
                 <p-iconfield iconPosition="left" class="ml-auto">
                     <p-inputicon>

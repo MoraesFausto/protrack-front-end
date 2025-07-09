@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APIService } from './api.service';
 import { firstValueFrom } from 'rxjs';
+import { Employee } from './employee.service';
 
 export interface TeamDTO {
     id: number;
@@ -24,8 +25,9 @@ export interface TeamEmployeeDTO {
     id: number;
     name: string;
 }
-
+//
 export interface Team {
+
     id: number;
     name: string;
     teamFocus?: string;

@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-header">
+    <h5>{{ isEditMode ? 'Editar Time' : 'Criar Novo Time' }}</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="name">Nome do Time</label>
+          <input
+            id="name"
+            type="text"
+            pInputText
+            formControlName="name"
+            [class]="{'ng-invalid ng-dirty': teamForm.get('name')?.invalid && teamForm.get('name')?.touched}">
+          <small *ngIf="teamForm.get('name')?.invalid && teamForm.get('name')?.touched" class="p-error">
+            Nome é obrigatório
+          </small>
+        </div>
+
+        <div class="p-field">
+          <label for="description">Descrição</label>
+          <textarea
+            id="description"
+            pInputTextarea
+            formControlName="description"
+            rows="4"></textarea>
+        </div>
+      </div>
+
+      <div class="p-d-flex p-jc-end p-mt-4">
+        <button pButton
+                type="submit"
+                icon="pi pi-check"
+                class="p-button-success"
+                [disabled]="teamForm.invalid">
+          Salvar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

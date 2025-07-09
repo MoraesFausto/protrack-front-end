@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Gerenciar Membros: {{ team?.name }}</h5>
+  </div>
+  <div class="card-body">
+    <div class="p-grid">
+      <div class="p-col-6">
+        <h6>Membros do Time</h6>
+        <p-listbox [options]="employees"
+                  optionLabel="name"
+                  [style]="{ width: '100%' }">
+          <ng-template let-employee pTemplate="item">
+            <div class="p-d-flex p-ai-center p-jc-between">
+              <span>{{ employee.name }} ({{ employee.position }})</span>
+              <button pButton
+                      icon="pi pi-times"
+                      class="p-button-danger p-button-sm"
+                      (click)="removeEmployee(employee.id)"></button>
+            </div>
+          </ng-template>
+        </p-listbox>
+      </div>
+
+      <div class="p-col-6">
+        <h6>Adicionar Membro</h6>
+        <div class="p-inputgroup">
+          <p-dropdown [options]="availableEmployees"
+                     optionLabel="name"
+                     [(ngModel)]="selectedEmployee"
+                     placeholder="Selecione um funcionário"
+                     [showClear]="true"></p-dropdown>
+          <button pButton
+                  icon="pi pi-plus"
+                  class="p-button-success"
+                  (click)="addEmployee()"
+                  [disabled]="!selectedEmployee"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div *ngIf="loading; else content">
+  <mat-spinner></mat-spinner>
+</div>
+
+<ng-template #content>
+  <div class="project-header">
+    <h1>{{ project.name }}</h1>
+    <p>{{ project.description }}</p>
+  </div>
+
+  <app-project-details [project]="project"></app-project-details>
+
+  <div class="tasks-section">
+    <h2>Tarefas</h2>
+    <ul>
+      <li *ngFor="let task of project.tasks">
+        {{ task.title }} - Status: {{ task.status }}
+      </li>
+    </ul>
+  </div>
+</ng-template>

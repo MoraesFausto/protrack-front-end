@@ -1,0 +1,19 @@
+<div class="progress-container">
+  <h3>Progresso do Projeto</h3>
+  
+  <div *ngIf="progress > 0">
+    <mat-progress-bar
+      mode="determinate"
+      [value]="progress"
+      color="primary">
+    </mat-progress-bar>
+    <p>{{ progress }}% concluído</p>
+    <p class="task-count">
+      {{ completedTasks }} de {{ totalTasks }} tarefas finalizadas
+    </p>
+  </div>
+
+  <div *ngIf="progress === 0" class="info-state">
+    <p>Nenhuma tarefa concluída ainda.</p>
+  </div>
+</div>
